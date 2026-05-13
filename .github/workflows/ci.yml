@@ -26,6 +26,7 @@ jobs:
 
     env:
       OPENAI_API_KEY: sk-test-not-real
+      DATABASE_URL: postgresql://agent:localdev@localhost:5432/agentdb_test
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
       POSTGRES_DB: agentdb_test
