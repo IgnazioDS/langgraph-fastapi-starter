@@ -16,13 +16,13 @@ from app.graph.state import AgentState
 from app.graph.tools import TOOLS
 
 
-def build_graph() -> CompiledStateGraph:
+def build_graph() -> CompiledStateGraph[AgentState, None, AgentState, AgentState]:
     """Build and compile the agent graph.
 
     Graph flow:
       retrieve (fetch context) → agent (LLM call) → [tools? → agent] → END
     """
-    builder: StateGraph = StateGraph(AgentState)
+    builder: StateGraph[AgentState, None, AgentState, AgentState] = StateGraph(AgentState)
 
     builder.add_node("retrieve", retrieve_context)
     builder.add_node("agent", call_model)
@@ -41,10 +41,10 @@ def build_graph() -> CompiledStateGraph:
 
 
 # Module-level compiled graph — initialized once at startup via init_graph().
-_graph: CompiledStateGraph | None = None
+_graph: CompiledStateGraph[AgentState, None, AgentState, AgentState] | None = None
 
 
-def get_graph() -> CompiledStateGraph:
+def get_graph() -> CompiledStateGraph[AgentState, None, AgentState, AgentState]:
     """Return the compiled graph. Raises if init_graph() has not been called."""
     if _graph is None:
         raise RuntimeError("Graph not initialized. Call init_graph() at startup.")

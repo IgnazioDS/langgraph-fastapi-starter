@@ -1,6 +1,7 @@
+from unittest.mock import MagicMock
+
 import pytest
 from httpx import AsyncClient
-from unittest.mock import MagicMock
 
 
 @pytest.mark.asyncio

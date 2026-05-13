@@ -1,11 +1,49 @@
 # langgraph-fastapi-starter
 
+[![CI](https://github.com/IgnazioDS/langgraph-fastapi-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/IgnazioDS/langgraph-fastapi-starter/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/IgnazioDS/langgraph-fastapi-starter?display_name=tag)](https://github.com/IgnazioDS/langgraph-fastapi-starter/releases)
+
 A production-grade backend template for AI agent applications. Fork this, configure
 four environment variables, and you have a running agent API with auth, persistence,
 and structured logging. Delete the example agent and build yours.
 
 This is not a framework. It is an opinionated starting point that exposes every decision
 so you can change the ones you disagree with.
+
+## 10-Minute Path
+
+If you want the fastest credible evaluation path, use this sequence:
+
+1. Clone the repo and bring up Postgres with `make up`
+2. Run migrations and create an API key
+3. Change the graph in `app/graph/`
+4. Send one real request to `/v1/agent/run`
+5. Run lint, type-checking, and tests
+
+The full walkthrough lives in [docs/build-your-first-agent.md](./docs/build-your-first-agent.md).
+
+---
+
+## Architecture
+
+```mermaid
+flowchart LR
+    Client["API client or UI"] --> Router["FastAPI routers"]
+    Router --> Auth["API key middleware"]
+    Auth --> Service["Agent service"]
+    Service --> Graph["LangGraph runtime"]
+    Graph --> Retrieve["retrieve_context node"]
+    Retrieve --> Model["call_model node"]
+    Model -->|tool calls| Tools["ToolNode(TOOLS)"]
+    Tools --> Model
+    Model --> Persistence["Session + message persistence"]
+    Persistence --> Postgres["PostgreSQL + pgvector"]
+    Retrieve --> Postgres
+```
+
+The request path is intentionally simple: FastAPI handles transport, middleware enforces
+auth, the service layer invokes a small LangGraph loop, and PostgreSQL carries both
+application data and vector-backed retrieval.
 
 ---
 
@@ -60,6 +98,21 @@ curl -X POST http://localhost:8000/v1/agent/run \
   -H "Content-Type: application/json" \
   -d '{"session_id": "demo-1", "message": "What is retrieval-augmented generation?"}'
 ```
+
+---
+
+## Build Your Own Agent
+
+You do not need to understand the whole repository before changing the agent. In most
+cases, the first working customization fits inside four files:
+
+- `app/graph/state.py`
+- `app/graph/nodes.py`
+- `app/graph/tools.py`
+- `app/graph/graph.py`
+
+For a concrete clone -> customize -> run -> test walkthrough, see
+[docs/build-your-first-agent.md](./docs/build-your-first-agent.md).
 
 ---
 

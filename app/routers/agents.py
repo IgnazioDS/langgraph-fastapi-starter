@@ -5,6 +5,7 @@
 # To support multiple graphs, pass a graph_name param and select in AgentService.
 
 import logging
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 
@@ -26,7 +27,7 @@ def get_agent_service() -> AgentService:
 async def run_agent(
     request: RunAgentRequest,
     http_request: Request,
-    agent_service: AgentService = Depends(get_agent_service),
+    agent_service: Annotated[AgentService, Depends(get_agent_service)],
 ) -> RunAgentResponse:
     """Run the agent for a single conversational turn.
 
@@ -53,14 +54,14 @@ async def run_agent(
                 message="Agent execution failed.",
                 request_id=request_id,
             ).model_dump(),
-        )
+        ) from e
 
 
 @router.get("/v1/agent/sessions/{session_id}", response_model=SessionResponse)
 async def get_session(
     session_id: str,
     http_request: Request,
-    agent_service: AgentService = Depends(get_agent_service),
+    agent_service: Annotated[AgentService, Depends(get_agent_service)],
 ) -> SessionResponse:
     """Retrieve a session's message history."""
     tenant_id: str = http_request.state.tenant_id
@@ -91,4 +92,4 @@ async def get_session(
                 message="Failed to retrieve session.",
                 request_id=request_id,
             ).model_dump(),
-        )
+        ) from e
