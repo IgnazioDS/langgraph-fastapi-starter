@@ -19,6 +19,10 @@ TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL")
 if TEST_DATABASE_URL:
     os.environ["DATABASE_URL"] = TEST_DATABASE_URL
 
+# Ensure required settings exist before test modules import app code.
+os.environ.setdefault("OPENAI_API_KEY", "sk-test-not-real")
+os.environ.setdefault("POSTGRES_PASSWORD", "localdev")
+
 
 @pytest.fixture(scope="session")
 def _patch_config() -> Generator[None, None, None]:
@@ -32,7 +36,19 @@ def _patch_config() -> Generator[None, None, None]:
 
 
 @pytest.fixture(scope="session")
-async def client(_patch_config: None) -> AsyncGenerator[AsyncClient, None]:
+def _app_runtime(_patch_config: None) -> Generator[None, None, None]:
+    """Initialize shared app resources needed by tests."""
+    from app.db.connection import close_pool, init_pool
+    from app.graph.graph import init_graph
+
+    init_pool()
+    init_graph()
+    yield
+    close_pool()
+
+
+@pytest.fixture(scope="session")
+async def client(_app_runtime: None) -> AsyncGenerator[AsyncClient, None]:
     """Session-scoped async HTTP client wired to the FastAPI app."""
     from app.main import create_app
 
@@ -44,7 +60,7 @@ async def client(_patch_config: None) -> AsyncGenerator[AsyncClient, None]:
 
 
 @pytest.fixture
-async def admin_key(client: AsyncClient) -> str:
+async def admin_key(client: AsyncClient, _app_runtime: None) -> str:
     """Create a fresh admin key for a test and return the plaintext."""
     # Bootstrap: we need one key to create more keys.
     # For the first key, call the service directly (bypasses auth middleware).
