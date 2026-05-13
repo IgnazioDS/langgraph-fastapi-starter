@@ -1,4 +1,4 @@
-.PHONY: up down dev build install migrate create-key revoke-key test test-verbose lint typecheck clean format help
+.PHONY: venv up down dev build install install-uv migrate create-key revoke-key test test-verbose lint typecheck clean format help
 
 APP_NAME = langgraph-fastapi-starter
 PYTHON = python3
@@ -6,6 +6,10 @@ PYTHON = python3
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-18s\033[0m %s\n", $$1, $$2}'
+
+venv: ## Create a local virtual environment in .venv
+	@echo "→ Creating virtual environment..."
+	$(PYTHON) -m venv .venv
 
 up: ## Start postgres via Docker Compose
 	@echo "→ Starting database..."
@@ -20,7 +24,11 @@ down: ## Stop and remove containers
 
 install: ## Install package in editable mode with dev dependencies
 	@echo "→ Installing dependencies..."
-	pip install -e ".[dev]"
+	$(PYTHON) -m pip install -e ".[dev]"
+
+install-uv: ## Install dev dependencies with uv into the selected Python environment
+	@echo "→ Installing dependencies with uv..."
+	uv pip install --python $(PYTHON) -e ".[dev]"
 
 migrate: ## Run database migrations
 	@echo "→ Running migrations..."
