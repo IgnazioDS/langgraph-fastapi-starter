@@ -24,6 +24,14 @@ The full walkthrough lives in [docs/build-your-first-agent.md](./docs/build-your
 
 ---
 
+## Community Health
+
+If you want to contribute, start with [CONTRIBUTING.md](./CONTRIBUTING.md).
+If you need to report a vulnerability, follow [SECURITY.md](./SECURITY.md).
+If you are cutting a tag, follow [docs/releasing.md](./docs/releasing.md).
+
+---
+
 ## Architecture
 
 ```mermaid
@@ -72,21 +80,26 @@ feature flags, admin UI. Add what your product needs. Don't pay for what it does
 git clone https://github.com/IgnazioDS/langgraph-fastapi-starter
 cd langgraph-fastapi-starter
 
-# 2. Configure
+# 2. Create a virtual environment and install dependencies
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
+
+# 3. Configure
 cp .env.example .env
 # Set OPENAI_API_KEY and POSTGRES_PASSWORD in .env — everything else has defaults
 
-# 3. Start the database
+# 4. Start the database
 make up
 
-# 4. Run migrations and create your first API key
+# 5. Run migrations and create your first API key
 make migrate
 make create-key NAME="local-dev"
 
-# 5. Run the server
+# 6. Run the server
 make dev
 
-# 6. Verify
+# 7. Verify
 curl -H "Authorization: Bearer <key-from-step-4>" http://localhost:8000/health
 ```
 
@@ -98,6 +111,9 @@ curl -X POST http://localhost:8000/v1/agent/run \
   -H "Content-Type: application/json" \
   -d '{"session_id": "demo-1", "message": "What is retrieval-augmented generation?"}'
 ```
+
+If you prefer `uv`, create the environment with `uv venv --python 3.11` and install
+dependencies with `make install-uv`.
 
 ---
 

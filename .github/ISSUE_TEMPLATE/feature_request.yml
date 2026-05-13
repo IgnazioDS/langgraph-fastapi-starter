@@ -1,0 +1,26 @@
+name: Feature request
+description: Propose an improvement to the starter
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What is missing or painful today?
+      placeholder: I want to use this starter for..., but...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful improvement.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Optional. Describe workarounds or other approaches.

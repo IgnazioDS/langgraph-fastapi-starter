@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible defect in the starter
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+        Please include enough detail for someone else to reproduce it.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the bug and the expected behavior.
+      placeholder: The API returned..., but I expected...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include commands, requests, or configuration details.
+      placeholder: |
+        1. Run ...
+        2. Send ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Python version, OS, database setup, and any relevant env vars.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or stack traces
+      description: Paste any relevant output.
