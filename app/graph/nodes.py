@@ -10,7 +10,7 @@
 import logging
 from typing import Literal
 
-from langchain_core.messages import SystemMessage
+from langchain_core.messages import BaseMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
 from app.config import config
@@ -20,7 +20,7 @@ from app.graph.tools import TOOLS, retrieve_documents
 logger = logging.getLogger(__name__)
 
 
-def retrieve_context(state: AgentState) -> dict:
+def retrieve_context(state: AgentState) -> dict[str, list[str]]:
     """Retrieve relevant document chunks based on the latest user message.
 
     Runs before the model call so retrieved context can be injected as a system message.
@@ -55,7 +55,7 @@ def retrieve_context(state: AgentState) -> dict:
     return {"context": [result]}
 
 
-def call_model(state: AgentState) -> dict:
+def call_model(state: AgentState) -> dict[str, list[BaseMessage] | int]:
     """Invoke the LLM with the current message history and any retrieved context.
 
     Binds all tools to the model so it can emit tool calls.

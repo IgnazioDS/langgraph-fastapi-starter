@@ -11,7 +11,7 @@
 
 import logging
 
-from langchain_core.tools import tool
+from langchain_core.tools import BaseTool, tool
 
 from app.config import config
 
@@ -28,7 +28,7 @@ def web_search(query: str) -> str:
         )
 
     try:
-        from tavily import TavilyClient  # type: ignore[import-untyped]
+        from tavily import TavilyClient
 
         client = TavilyClient(api_key=config.tavily_api_key)
         results = client.search(query=query, max_results=3)
@@ -100,4 +100,4 @@ def retrieve_documents(query: str, top_k: int = 5) -> str:
 
 
 # All tools registered with the agent. Import this list in graph.py.
-TOOLS: list = [web_search, retrieve_documents]
+TOOLS: list[BaseTool] = [web_search, retrieve_documents]

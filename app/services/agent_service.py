@@ -1,7 +1,8 @@
 import asyncio
 import json
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+from typing import cast
 
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langgraph.graph.state import CompiledStateGraph
@@ -19,7 +20,10 @@ from app.models.responses import MessageResponse, RunAgentResponse, SessionRespo
 
 
 class AgentService:
-    def __init__(self, graph: CompiledStateGraph) -> None:
+    def __init__(
+        self,
+        graph: CompiledStateGraph[AgentState, None, AgentState, AgentState],
+    ) -> None:
         self._graph = graph
 
     async def run(
@@ -64,7 +68,7 @@ class AgentService:
                 history.append(AIMessage(content=content))
 
         # 3. Build initial state and invoke graph
-        run_id = f"run_{datetime.now(tz=timezone.utc).strftime('%Y%m%dT%H%M%S%f')}"
+        run_id = f"run_{datetime.now(tz=UTC).strftime('%Y%m%dT%H%M%S%f')}"
         initial_state: AgentState = {
             "messages": [*history, HumanMessage(content=message)],
             "session_id": session_id,
@@ -76,8 +80,9 @@ class AgentService:
         }
 
         loop = asyncio.get_event_loop()
-        result: AgentState = await loop.run_in_executor(
-            None, self._graph.invoke, initial_state
+        result = cast(
+            AgentState,
+            await loop.run_in_executor(None, lambda: self._graph.invoke(initial_state)),
         )
 
         # 4. Extract final assistant response

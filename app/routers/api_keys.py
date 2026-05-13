@@ -45,7 +45,7 @@ async def create_api_key(
                 message="Failed to create API key.",
                 request_id=request_id,
             ).model_dump(),
-        )
+        ) from e
 
 
 @router.delete("/v1/keys/{key_id}", status_code=204)
@@ -78,7 +78,7 @@ async def revoke_api_key(
                 message="Failed to revoke API key.",
                 request_id=request_id,
             ).model_dump(),
-        )
+        ) from e
 
 
 @router.get("/v1/keys", response_model=list[ApiKeyResponse])
@@ -99,4 +99,4 @@ async def list_api_keys(
                 message="Failed to list API keys.",
                 request_id=request_id,
             ).model_dump(),
-        )
+        ) from e

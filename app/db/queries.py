@@ -41,7 +41,9 @@ LIST_API_KEYS = """
 # ─── Sessions ─────────────────────────────────────────────────────────────────
 
 CREATE_SESSION = """
-    INSERT INTO agent_sessions (id, session_id, tenant_id, created_at, last_active_at, message_count)
+    INSERT INTO agent_sessions (
+        id, session_id, tenant_id, created_at, last_active_at, message_count
+    )
     VALUES (%(id)s, %(session_id)s, %(tenant_id)s, NOW(), NOW(), 0)
     ON CONFLICT (session_id, tenant_id) DO UPDATE SET last_active_at = NOW()
     RETURNING id, session_id, created_at, last_active_at, message_count

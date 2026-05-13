@@ -1,7 +1,6 @@
 from collections.abc import Generator
 from contextlib import contextmanager
 
-import psycopg2
 from psycopg2.extensions import connection
 from psycopg2.pool import ThreadedConnectionPool
 
