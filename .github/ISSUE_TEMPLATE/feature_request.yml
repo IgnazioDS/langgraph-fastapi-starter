@@ -1,0 +1,48 @@
+name: Feature request
+description: Propose a focused improvement to the starter.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Strong proposals explain the product problem first and keep the starter's intentionally small scope in mind.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues, discussions, and the roadmap.
+          required: true
+        - label: This belongs in the reusable starter rather than one specific product.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What recurring developer or product problem would this solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful implementation and its public interface.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What workarounds or existing tools have you tried?
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and tradeoffs
+      description: Note added dependencies, configuration, migration impact, or maintenance cost.

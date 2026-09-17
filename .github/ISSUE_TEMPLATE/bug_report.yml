@@ -1,0 +1,80 @@
+name: Bug report
+description: Report a reproducible defect in the starter.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the project. Please remove secrets and API keys from logs before submitting.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and discussions for this problem.
+          required: true
+        - label: I reproduced the problem on the latest main branch or release.
+          required: true
+        - label: I removed API keys, credentials, and personal data from this report.
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Release tag or commit SHA where the problem occurs.
+      placeholder: v0.1.0 or aa1bed2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Agent graph or tools
+        - FastAPI routes
+        - Authentication or API keys
+        - PostgreSQL or migrations
+        - Docker or local setup
+        - Tests or CI
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the shortest sequence of commands or requests that reproduces the issue.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste sanitized logs or stack traces.
+      render: shell
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, Docker version, and database version.
+      placeholder: macOS 15, Python 3.11.10, Docker 27, PostgreSQL 16
+    validations:
+      required: true

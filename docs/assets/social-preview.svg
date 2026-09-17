@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">LangGraph FastAPI Starter</title>
+  <desc id="desc">A serious backend for AI agents. Auth, PostgreSQL, pgvector, migrations, Docker, and tests.</desc>
+
+  <rect width="1280" height="640" fill="#f3f1ec"/>
+  <rect width="18" height="640" fill="#2557ff"/>
+
+  <g fill="#111111" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text x="74" y="80" font-size="22" font-weight="700" letter-spacing="2.4">OPEN-SOURCE AI AGENT BACKEND</text>
+    <text x="1205" y="80" font-size="22" font-weight="700" text-anchor="end" letter-spacing="1.6">MIT / PYTHON 3.11+</text>
+
+    <line x1="74" y1="112" x2="1206" y2="112" stroke="#111111" stroke-width="2"/>
+
+    <text x="68" y="248" font-size="104" font-weight="800" letter-spacing="-4.2">LANGGRAPH</text>
+    <text x="68" y="352" font-size="104" font-weight="800" letter-spacing="-4.2">× FASTAPI</text>
+
+    <text x="74" y="442" font-size="38" font-weight="500" letter-spacing="-0.8">A serious backend for AI agents.</text>
+    <text x="74" y="491" font-size="23" font-weight="400" fill="#454545">Auth · PostgreSQL · pgvector · migrations · Docker · tests</text>
+
+    <line x1="74" y1="550" x2="1206" y2="550" stroke="#111111" stroke-width="2"/>
+    <text x="74" y="594" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#454545">github.com/IgnazioDS/langgraph-fastapi-starter</text>
+  </g>
+
+</svg>
