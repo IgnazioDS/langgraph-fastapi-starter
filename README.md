@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/assets/social-preview.png" alt="LangGraph FastAPI Starter — a serious backend for AI agents" width="100%">
+
 # LangGraph FastAPI Starter
 
 ### Ship a real AI agent API — not another notebook demo.
