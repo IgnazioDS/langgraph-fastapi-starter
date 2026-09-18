@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Architecture question or idea
+    url: https://github.com/IgnazioDS/langgraph-fastapi-starter/discussions
+    about: Use Discussions for design questions, implementation help, and open-ended ideas.
+  - name: Security vulnerability
+    url: https://github.com/IgnazioDS/langgraph-fastapi-starter/security/policy
+    about: Report suspected vulnerabilities privately instead of opening a public issue.

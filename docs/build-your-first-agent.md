@@ -102,8 +102,7 @@ curl -X POST http://localhost:8000/v1/agent/run \
   -H "Content-Type: application/json" \
   -d '{
     "session_id": "demo-support-1",
-    "message": "Summarize the last customer issue and suggest the next action.",
-    "stream": false
+    "message": "Summarize the last customer issue and suggest the next action."
   }'
 ```
 
